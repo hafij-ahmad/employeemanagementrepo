@@ -1,0 +1,2947 @@
+ ASP.NET CORE Tutorial for beginner
+// part1 //
+1- what is Asp.net core -is a cross platform, high -performance,open source framework for building  modern, cloud based ,internet-connected application.
+2-Asp.net Core is a redesign of Asp.net 4.x
+A-cros plateform-Asp.net Core application can developed and run across different plateform like
+1-windows
+2-macos
+3-Linux
+Asp.net core application can hosted on
+1-IIS
+2-Apache
+3-Docker
+3-Self Hosted
+Asp.net Core Benefits and features
+one unified programming model for MVC And web api
+Both the MVC Controller class and the Asp.net web api Controller class inherit from same Controller base class and return IActionResult
+
+IActionResult is two type return the result
+1-ViewResult
+2-jsonResult
+--------------------------------------
+3-Dependency Injection
+4-Testability
+5-open -source
+6-Modularity
+
+
+Modular-Asp.net core provides Modularity with Middleware Components
+both the request and response pipelines are composed using the middleware components
+rich set of built-in middleware components are provided out of the box
+custom Middleware Components can also be created
+
+Prerequisitesj
+1-Basic HTML,CSS,and C#
+2-Prior MVC Knowledge is helpfull but not required
+// Tools Required and build Asp.net Core Application
+
+//part2 Tools Required .NetCore Development//
+1-An editor-vs,vscode,sublime,Vim,Atom
+2-.NET CORE SDK(Software development Kit)
+install visual Studio 2017
+1-Visual Studio Community Edition is Free
+2-DownLoad from url-http://visualstudio.microsoft.com
+after enter and see 
+first templet click and download visual studio 2017-- after run 
+ select .net core Core Cross-plateform Development WorkLoad
+ appcore plateform selectd=>a;so sdk=and .net Core 2.1 Version Install=
+
+open and go file -click =new-project=select C#=>WEB-.netcore=Asp.net Core Application
+select-ok=only 2.1
+now you can download Latest version .net core//  from url=http://dotnet.microsoft.com/download=enter 
+then  window click Download .net core sdk and and run as administrator successfully install
+ now start visual studio new project select asp.net core web application
+
+// part 3 Asp.net Core  Web Application//
+Creating Asp.net Core Web Application
+Creating a new Asp.net Core Project in Visual Studio
+2017
+1-Open Visual Studio 2017 =file=New-Project=>C#=WEB=>.NETCORE=>Asp.net Coreweb Application Click=name-EmployeeManagment=c:/Projects=ok=>
+1Empty 2-Web Application with Model-view controller=>click ok=>
+
+solution explorere=check folder=wwwroots-css,js,lib folder consistingand api (controoler folder)
+3-web Application template-consisting=>and class liberary folder user 
+angularjstemplate,Reactjs,Reactjs and redux templete
+
+step 1-Select Empty=>ok>EmployeeManagement=>solution explorer=>Run the project without debuuging
+check
+// step 4 Asp.net Core Project File//
+1-.csproj or.vbproj depending on the programming language used(no need uload project )
+2-Step 2Right click Project Edit EmployeManagement.cproj=click and  check
+
+<Project Sdk="Microsoft.NET.Sdk.Web">
+<Target framework>netcoreapp2.2
+<appnecoreHosting Model>inpprocess</AppNetCoreHostingModel>
+<itemGroup>
+<packagereference include="Microsoft.AspNetCore.Razor.Design" version="2.2.0">
+</itemgroup>
+3-file or folder refrences are no longer included in the project file
+after that go to 
+The file system determines what files and folders belongs to the project
+let add new right click project open folder and add new file text file if delete project in folder is automaticly quickly impackt inproject
+
+Target Framework
+-Specified the target framework for the application
+2-To Specify a target framework we use Target Framework Monikaer(TFM)
+SEEE in 
+
+NAME                 ABBREVATION                       TFM
+.NET Framework        net                             net451
+                                                      net472
+-------------------------------------------------------------
+.NET CORE            netcoreapp                    netcoreapp1.0
+                                                   netcoreapp2.2
+
+//AspNetcoreHostonhModel
+1-Specify how the application should be hosted
+2-Inprocess or OutProcess
+3-inprocess host the app inside of the IISworker process(w3wp.exe)
+4-OutofProcess hosting model forward web requests to a backend ASP.NET Core  app running the Kestrel server
+
+PACKAGERefrences--
+used to include a refrence to the NUGET package that is installed for the application
+Metapackage-Microsoft.Asp.netCore.App
+A metapackage has no content of its own
+expand nuget pakage in project
+it just contains a list of dependencies (other packages)
+when the version is not specified, an Implicit version is specified by the SDK
+retry on the implicit version rather than explicitly setting the versionnumber on the package refrence
+
+// part5 main method in asp.net core//
+
+Main method in asp.net core application
+Program.cs file open
+
+public static void Main(string[] args)(which is entry point
+{
+CreateWebHostBuilder(args).Build().Run();
+}
+
+A console application usually has Main()method
+why do we have a Main() method in ASP.NET Core web application
+Asp.net Core application initially starts as a Console application
+This Main() method configuration ASP.NET Core and starts it and at that point
+it becomes an ASP.NET Core we application
+
+Startup.cs
+public void ConfigureServices(IServiceCollection services)
+{
+}
+public void Configure(IapplicationBuilder app,IHostingEnvirment env)
+}
+
+like thatin that project you can check details
+
+
+//part 6 inprocess Hosting in Asp.net core//
+
+Step 1 check in program.cs in CreateDefaultBuilder()
+some of the tasks that CreateDefaultBuilder() performs
+1-Setting up the web server
+2-Loading the host and application configuration from various configuration sources and 
+2-Configuring logging
+
+ASP.NET CORE application can be hosted
+1-InpROCESS
+2-oUTofProcess
+To configure InProcess hosting
+<AspNetCoreHostingModel>InProcess</AspnetCoreHostingModel>
+go to project right click edit project.cproj file check there is mention
+createdefaultbuilder() method calls UseIIS() method and host the app inside of the IIS orker process(w3wp.exe or iisexpress.exe)
+inprocess hosting delivers significantly higher request throughput then outprocess hosting
+run the application then show message hello world
+
+To get the process name executing the app
+System.Diagnosting.Process.GetCurrentProcess().ProcessName
+
+after that open StartUp.cs file in project
+
+see one line await context.Response.WriteAsync("Hello world!");
+that line is show message hello world! after run program
+now replace value Hello world!=System.Diagnostics.Process.GetCurrrentProcess().ProcessName);
+let run program print  iisexpress
+iis lightweight production check iisexpress sytem corner
+//
+Asp.net core Inprocess Hosting
+ with out of process hosting
+1-2 web Server-internal and external web server
+2-The internal web server is kestrel
+3-The external web server can be IIS,Nginx or Apache
+what is kestrel
+1-Cross-Plateform Web Server for ASP.NET Core
+
+2-Kestrol can be used ,by itself as an edges server
+
+3-The process used to host the app is dotnet.exe
+
+run the project display iisexpress
+and after that run command line first open developer camand prompt vs15or vs17.9.5 as per system
+ 1-type -dotnet--help enter
+after enter there is so many command line check one by one 
+
+and put command -cd C:\Projects\Employeemanagement\Employeemanagement
+after that -dotnet run=enter
+http//locallhost5000 copy and any other browser
+
+//part7 out process in net core//
+with Inprocess hosting
+Application is hosted inside the IIS worker process
+
+there is only one web server
+from a performance standpoint,Inprocess hosting is better than outprocess hosting
+
+
+kestrel can be used as the internet facing  web server
+internet<<=========>>http kestrel(application)
+
+after that put in project place of inprocess at OutProcess then run application
+open command prompt-and put dotnet run and enter see everytinh 
+http//localhost:5000 copy paste any browser
+is coming dotnet display
+
+another way
+kestrel can be used in combination with a reverse proxy 
+without kestrel inprocess run application
+
+shut down cutr +c enter command prompt close
+
+
+campare between inprocess vs outprocess hosting
+inprocess                        outprocess
+1-process name is w3wp.exe       1-Process name is dotnet.exe
+or iisexpress.exe
+
+2-Only one web server            2-Two web server
+
+3-Better for performance         3- Penalty of proxying requests between internal and external web server
+
+// Part 8 Asp.net core launchsetting .json file//
+step 1= go to project and Properties folder click-launchSetting.json
+===open=ther is two type profiles
+--iisexpree,Emoloyeemanagement
+command name     AspNetCoreHostingModel    internalweserver      External Web Serve
+project          Hosting setting Ignored   Only one web server   kestrel
+iisexpress      InProcess                 only one web server    IISEXPRESS(CHECK DETAILS CAMMAND NAME IN LUNCHSETTINGS.JSON FILE)
+
+iisexpress      OutOfProcess              kestrel                IIS Express
+
+after that put the value inprocess place outofprocess in file json (run project) iisexpress==output dotnet
+IIS             iNPROCESS                 only one web server      iis
+IIS             oUTofProcess              Kestrol                  IIS
+
+SETTING PROJECT CLICK RIGHT ON PROJECT GO PROPERT AND DEBUG=>profile-select list iis Expressor project name
+
+// part 9 Asp.net Core appsetting.json file//
+configuration Sources in ASP.NETCore
+1-Files(appsetting.json,appsetting.{Environment}.json)
+
+2-User secrets
+
+3-Enviroment variables
+
+4-Command-line arguments
+step1-appsetting.json click open projects----
+{
+"Logging":{
+ "LogLevel":{
+ "Default":"warning"
+}
+},
+"AllowedHosts":"*",(put code there),
+"MyKey":"Value of mykey from appsetting.json"
+}
+(after that To access configuration information 1-IConfiguration Service
+after that go Start.cs file check
+public class Startup
+{
+ ctor tab tab
+private IConfiguration _config;
+
+ public Startup(Iconfiguration(add name namesapce) config)
+{
+ _config=config;
+}
+
+and after that put value
+.WriteAsync(_config["MyKey"]);
+});
+save and run project
+after that
+in project appsetting.json expand=>appsetting.development.json click
+
+{
+"Logging":{
+ "LogLevel"{
+ "Default":"Debug",
+ "System":"Information",
+ "Microsoft":"Information"
+}
+}
+}
+and click appseting.json and copy mykey value
+paste inside appsetting.json file
+
+{
+"Logging":{
+ "LogLevel"{
+ "Default":"Debug",
+ "System":"Information",
+ "Microsoft":"Information"
+}
+},
+"MyKey":"Value of mykey from appsetting.dvelopment.json"
+ } save changes and run 
+display the same value in "MyKey":"Value of mykey from appsetting.dvelopment.json"
+now comment code after that run
+
+after that applunchsetting file there
+
+"ASPNETCORE_ENVIRONMENT":"Development",
+ now add 
+"MyKey":"Value of mykey from Enviroment variable"
+
+// Command -Line argument configuration
+now first uncomment appsetting.Enviroment.json click
+
+uncomment
+
+line "MyKey":"value of Mykey from appsetting.Development.json"
+ run and see
+opem command prompt
+ dotnet run MyKey="Value from command line" enter
+
+copy localhost url and paste in any browser then print value mykey
+
+// part 10 Middleware in ASP.NET Core//
+
+------------------------------------------------------>
+<----LOGING---------------sTAICFiles-------------------
+Middleware in Asp.net Core
+1-Has access to both Request and response
+2-May simply pass the request to next Middleware
+3-May process and then pass the request to next middleware
+4-may handle the Request and short-circuits the pipeline
+5-May process the outgoing Response
+6-Middlewares are executed in the order they are added
+
+//part11 Configure ASP.NET Core Request Processing Pipeline//
+check startup.cs is two middleware part in  change value print "hello worl")
+step 1-right click project and add new folder wwwroot-right add new html file food.html
+
+<body>
+add code
+<h1>hello from food.html</h1>
+</body> run program put url food html value is not come
+step 1- go to the startup.cs class click 
+open
+two middleware file
+public void Configure(IapplicationBuilder app,IhostingEnvironment env)
+{
+  if(env.IsDvelopment())
+{
+   app.UseDevelopmentEceptionPage();
+} is first middleware
+app.Run(async (context)=>
+{
+ await context.Response.WriteAsync("Hello from first middlewre!")
+});
+app.Run(async (context)=>
+{
+ await context.Response.WriteAsync("Hello from seond middleware!");
+});
+
+}
+}
+}
+and copy paste one more middleware
+after run then it will come only for first middleware first not showing second
+middleware if want show second middleware the we can use key first
+app.use(async(context,next)=>
+{
+ await context.Response.WriteAsync("Hello from first middlewre!")
+  await next();
+});
+after that start.cs file public void Configure(IAppllicatiobuilder app,Ihostingenvironment env,ILogger<Startup) logger)
+{
+ app.Use(async (context,next)=>
+{
+  logger.Loginformation("MW1":Incoming Request");
+  await next();
+logger.LoginInformation("MW1":Outgoing Response");
+});
+ app.Use(async (context,next)=>
+{
+  logger.Loginformation("MW2:Incoming Request");
+  await next();
+logger.LoginInformation("MW":Outgoing Response");
+});
+
+app.Run(async (context)=>
+{
+ await context.Response.WriteAsync("MW3":Request handled and response produced");
+ logger.LoginInformation("MW3":Request handled and response produced");
+});
+run program and ouput window select debug option
+there three middleware
+1-MW1:INcoming request
+2-MW2
+// part 18 create a folder  Models in our projects
+add class public Employee
+{
+  public int id{get;set;}
+  public string Name{get;set;}
+public String Email {get;set;}
+ public string Department{get;set;} 
+}
+and add another class add interface
+in model class
+public interface IEmployeeRepository
+{
+ Employee GetEmployee(int id);
+}
+after that add new New Class 
+Public class MockEmployeeRepository:IEmployeeRepository
+{
+private List<Employee> _employeeList
+ctor constructor
+public MockEmployeeRepository()
+{
+_employeeList=new List<Employee>(){
+
+   new Employee() { Id = 1, Name = "Hafij", Department = "IT" };
+                new Employee() { Id = 2, Name = "WAKEEL", Department = "URDU" };
+                new Employee() { Id = 3, Name = "MUKTAR", Department = "CONSTRUCTION" };
+                new Employee() { Id = 4, Name = "SHAMSHAD", Department = "Financial" };
+};
+}
+Public Employee GetEmployee(int id)
+{
+return _employeeList.FirstOrDefault(e=>e.Id==Id)
+}
+
+After that go Home controller
+public class HomeControoler:Controller
+{
+ ctro create constructor
+public HomeController(IEmployeeRepository employeeRepository)
+{
+_employeeRepository=employeeRepository
+cuntr+period
+}
+after that Go to indes method
+
+public string Index()
+{
+  reurn employeeRepository.GetEmployee(1).Name;
+}
+
+//part 19 apply dependency injection Go to Startup.cs class
+        public void ConfigureServices(IServiceCollection services)
+        {
+            //part 16 mvc setup projects
+            //services.AddMvc();
+            services.AddMvcCore();
+            //add dependency injection/
+            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
+------------------------------ now go Home Call depemndency injection
+step  private IEmployeeRepository _employeeRepository;      
+        //public HomeController(IEmployeeRepository employeeRepository)//step1after add dependency injection  chabge code only call MockEmployeeRepository
+        //{  
+        //    _employeeRepository = employeeRepository;
+        //}
+        public HomeController()//step 2=after add dependency injection  chabge code only call MockEmployeeRepository
+        {
+            _employeeRepository = new MockEmployeeRepository();
+        }
+
+
+// part 20 Controller in asp.net core 
+is call is dervided controoler class having many action hanle incoming http request
+http://localhost:123/home/Details
+
+step 1 Go to Home controller create new action method name is Details
+public JsonResult Details()
+        {
+            Employee model = _employeeRepository.GetEmployee(1);
+            return new JsonResult(model);
+        }
+run the program /localhost/Home/Details1
+enter
+and cop urlpaste n fidler
+
+stpe3 after add the code startup.cs ile services.AddMvc().AddXMLSerilizerFormatters(;
+run program and copy url past in fidler
+then noe get data in only xml format
+after taht add now chage action method return type
+public ViewResult Details()
+{
+  Employee model = _employeeRepository.GetEmployee(1);
+return view(model);
+}
+after run program will come error
+// Part 21 Asp.net Core MVC Views//
+Step 1-Add new folder View in project and after that ADD NEW FOLDER Home-Add right click folder Razor view name-Details.cshtml
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <h1>Details.cshtml from View/Home Folder</h1>
+    </body>
+</html>
+// EmployeeController
+==>Details.cshtml
+=>Edit.cshtml
+=>List.cshtml
+----------------------------------------------
+
+same HomeController
+==>Details.cshtml
+=>Edit.cshtml
+=>List.cshtml
+------------------------------------------
+Part 2 Customize view Discovery in Asp.net core MVC
+first change code
+public class HomeController : Controller
+    {
+        private IEmployeeRepository _employeeRepository;
+
+        // Constructor with dependency injection
+        public HomeController(IEmployeeRepository employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+        }
+
+        // Parameterless constructor (if needed)
+        //public HomeController()
+        //{
+        //    _employeeRepository = new MockEmployeeRepository();
+        //}
+        ///Views/Home/Details.cshtml
+
+   //public ViewResult Details()(imp if ViewResult return view then MockEmployeerepository not working  pass only constructor method comment code Mockemployeerepositor
+        //{
+        //    var model = _employeeRepository.GetEmployee(1);
+        //    return View(model); // Now works because HomeController inherits from Controller
+        //}
+after that now lets add new cstml file in home folder Test.cshtml
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1> Test HTML from View/home</h1>
+</body>
+</html>
+------------------------------------------------
+after that call directly
+
+        public ViewResult Details()
+        {
+            var model = _employeeRepository.GetEmployee(1);
+            return View("Test"); // Now works because HomeController inherits from Controller
+        }
+
+
+After that add new Folder MyView-right click -add new razor view name TEST1.CSHTM
+ then we can call 
+ public ViewResult Details()
+        {
+            var model = _employeeRepository.GetEmployee(1);
+            return View("MyView/Test1.cshtml"); // Now works because HomeController inherits from Controller
+        }
+nnow go View Folder ADD new Test Folder ADD NEW razor Update.cshtml
+public ViewResult Details()
+        {
+            //    var model = _employeeRepository.GetEmployee(1);
+            //    return View(model); // Now works because HomeController inherits from Controller
+            //    var model = _employeeRepository.GetEmployee(1);
+            //    return View("Test"); // Now works because HomeController inherits from Controller
+
+            //var model = _employeeRepository.GetEmployee(1);
+            //return View("MyView/Test1.cshtml"); // Now works because HomeController inherits from Controller
+            //   var model = _employeeRepository.GetEmployee(1);
+            //return View("../Test/Update");
+            // Now works because HomeController inherits from Controller
+            var model = _employeeRepository.GetEmployee(1);
+           return View("../../MyView/Test1");
+        }
+part 23// Passing Data To View in Asp.net core mvc//
+Passing Data To Controller to view is different ways passing data action method or controller to view
+1-ViewData
+2-ViewBag
+3-Stronlgy Type View
+ViewData-- is Dictionary of weakly typed objects
+use string Keys to store and retrive data 
+sysntax
+1-Method-ViewData["PageTitle"] pass data controller to VIEW
+ public ViewResult Details()
+        {
+            var model = _employeeRepository.GetEmployee(1);
+            ViewData["Employee"] = model;
+            ViewData["pagetitle"] = "Employee Details";
+            return View();
+        }
+// pass data from ViewBag
+ public ViewResult Details()
+        {
+            var model = _employeeRepository.GetEmployee(1);
+            ViewBag.Employee = model;
+            ViewBag.pagetitle = "Employee Details";
+            return View();
+        }
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <h1>Details.cshtml from View/Home Folder</h1>
+    <h2> @ViewData["pagetitle"]</h2>
+    @{
+    var employee=ViewData["Employee"] as EmployeeMangement.Models.Employee;
+    }
+    <div>
+        Id:@employee.id
+    </div>
+    <div>
+        Name:@employee.Name
+    </div>
+    <div>
+        Name:@employee.Email
+    </div>
+    <div>
+        Name:@employee.Department
+    </div>
+    @*Retrieve Data From ViewBag controller to View*@
+    <h3>@ViewBag.pagetitle</h3>
+    <div>@ViewBag.Employee.id</div>
+    <div>@ViewBag.Employee.Name</div>
+    <div>@ViewBag.Employee.Department</div>
+</body>
+</html>
+// View bag is wrapper of ViewData Create a Losely Type View
+View BAG USED DYNAMICALLLY runtime no compile time no cmpile time checking intelegence
+Asp.net core strongly typed view in asp.net core
+
+// strongly type provide compile -time error chcking and intelligence//
+ public ViewResult Details()
+        {
+            var model = _employeeRepository.GetEmployee(1);
+            
+            ViewBag.pagetitle = "Employee Details from strongly typed view";
+            return View(model);
+    }
+details.cshtml
+
+@* Retrieve Data From Strongly Typed Model *@
+    @*<h4>@ViewBag.pagetitle</h4>
+    <div>Id: @Model.id</div>
+    <div>Name: @Model.Name</div>
+    <div>Email: @Model.Email</div>
+    <div>Department: @Model.Department</div>*@
+@model EmployeeMangement.Models.Employee
+
+// Part 26 Asp.net core ViewModel
+step 1- go Projects Add- new New folder-ViewModel-Add-New -Class-
+HomeDetailsViewModel.cs
+
+   public class HomeDetailsViewModel
+    {
+        public Employee Employee { get; set; }
+        public string PageTitle { get; set; }
+    }
+step 2-Go To Home Controller
+   public ViewResult Details()
+        {
+         HomeDetailsViewModel homeDetailsViewModel = new            HomeDetailsViewModel()
+         {
+          Employee = _employeeRepository.GetEmployee(1),
+          PageTitle = "EmployeeDetails"
+
+        };
+                                     
+        return View(homeDetailsViewModel);
+        }
+
+after that Details.cshtml
+add name space 
+@model EmployeeMangement.ViewModel.HomeDetailsViewModel
+@* Retrieve Data From ViewModel first add namespaces of class ViewModel*@
+    <h3>@ViewBag.PageTitle</h3>
+    <div> Name:@Model.Employee.Name</div>
+    <div>Email:@Model.Employee.Email</div>
+    <div>Department:@Model.Employee.Department</div>
+after run and see out put using ViewMoedel class 
+// Part 27-List View in Asp.net core MVC//
+STEP 1-Display all employee in table 
+step 2-Go Project and add one method list rerun table IEmployeeRepostory
+
+   public interface IEmployeeRepository
+    {
+       
+       add code return list employee table//IEnumerable<Employee>      GetEmployeeList();//Display value in table or list
+    }
+after that 
+after that Go To MockEmployeeRepository
+public IEnumerable<Employee> GetEmployeeList()
+        {
+            return _employeeList.ToList();
+        }
+AND Go to Home Controller
+ public ViewResult Index()
+        {
+            var model = _employeeRepository.GetEmployeeList();
+            return View(model);
+        }
+Index.cshtml
+@model IEnumerable<EmployeeMangement.Models.Employee>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <table border="1" cellpadding="1" style="text-align:center;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach( var employee in Model)
+            {
+                <tr>
+                    <td>@employee.id</td>
+                    <td>@employee.Name</td>
+                    <td>@employee.Department</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        </body>
+    </html>
+run program
+show result in table format
+ID	Name	Department
+1	Mary	HR
+2	John	IT
+3	Sam	IT
+//Part 28 Layout View in ASP.NET CORE IN MVC//
+
+              WEB SITE HEADER
+    M
+    E
+    N        View Specific content
+    U         Or Main Content
+
+              Web site  footer
+
+Design Page LIKE that MASTER PAGES
+
+Step 1- Create Layout view in Projects-right-click -view folder-add-new folder-shared -right -click-add new item-Search-Razor=Razor Layout-select-name-_Layout.cstml-ok-default name
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
+step 1-After that link all page by _Layout.cshtm
+first index.html
+@*//part 28 layout.cshtml//*@
+@{ 
+    Layout = "~/View/Shared/_Layout.cshtml";
+}
+After that add code same in Detals.cshtml
+@{ 
+    Layout = "~/View/Shared/_Layout.cshtml";
+}
+Layout view 
+1-Consistent look and behaviour for all the views in web application
+similar to master page in Asp.net web forms
+File on the file system with cshtml extention
+Default name is _Layout.cshtml folder
+usually placed in Views/Shared/_Layout.cshtml
+
+// part 29 Section in layout page in Asp.net core MVC
+STEP1 Go to project wwroot folder-right click js folder add new javascript file Custom.Script.js
+
+<body>
+    <h1>Master page Content Upcoming Loading wait...</h1>
+    <div>
+        <script src="~/JS/Custom.Script.js"></script>
+        @RenderBody()
+    </div>
+    @*@RenderSection("Script",required:false)*@
+    @if (IsSectionDefined("Script"))
+    {
+        @RenderSection("Script", required: true)
+    }
+</body>
+</html>
+if you want to only add Details.chtml section then
+@Sction.Script{
+
+<script src="~/JS/Custom.Script.js"></script>
+}
+A section can optional or mandatory
+A section in the layout view is rendered at the location where RendorSection( )method is called
+
+///part 30 _ViewStart.cshtml in Asp.net core MVC//
+Step 1-View-Folder-right click->Add-new-item-serach-Razor-Razorviewstart-select-_ViewStart.cshtml
+@
+{
+ Layout="_Layout";
+}
+now go to index.cshtml
+comment layout page
+after add new ViewStart in Home folder right click new item serach razor view start
+add
+@*@{
+    Layout = "_Layout";
+}*@
+
+comment code
+after that add code
+@{ 
+    if(User.IsInRole("Admin"))
+    {
+        Layout = "_AdminLayout";
+    }
+    else
+    {
+        Layout = "_NonAdminLayout";
+    }
+}
+1-Viewstart code in viewstart is executed before the code in an individual view
+2-move common code such as setting the layout property to viewStart
+3-ViewStart reduces code redundancy and improve maintability
+4-viewstart file is hierarchical
+// Part 31 Viewimports.cshtml in ASP.NET Core mvc
+step 1-View folder-right click-add- new item->Razor view import-file name
+default name-_Viewimports.cshtml
+  
+@using EmployeeMangement.ViewModel;
+@using EmployeeMangement.Models;
+_viewimport file to include common namespaces ue @using directves
+used to include the common namespaces use @using directive
+other supported 
+=>@addtaghelper
+=>@removetaghelper
+=>@taghelper
+=>@model
+=>@inherited
+=>@inject
+// part 32 Routing in ASP.NET Core mvc
+There are two types route
+1-Conventional Routing
+2-Attribute Routing
+htpp://paragamtech.com/employees/Details/1-------------->>Request-------controller==view=---Model
+
+Step 1-http://localhost:1234/Home/index
+public class HomeController : Controller
+    {
+        private IEmployeeRepository _employeeRepository;
+
+        // Constructor with dependency injection
+        public HomeController(IEmployeeRepository employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+        }
+         public string Index()
+       {
+          var model = _employeeRepository.GetEmployeeList();
+           return "Hello from MVC";
+        }
+home controller name
+index-action name
+
+Step 1-http://localhost:1234/Home/Details/1
+public ViewResult Details(int id)
+        {
+            return View();
+        }
+controller-home
+action-Details
+id -optional parameter
+
+Step 3-Starup.cs
+use
+
+
+//part 33 Attribute Routing in ASP.NET CORE MVC//
+Step 1-Go to Startup.cs
+now comment code //app.DefaultRoute();
+and also comment code
+//app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });//
+ public void ConfigureServices(IServiceCollection services)
+        {
+            //part 16 mvc setup projects
+            // services.AddMvc();
+            // part 20 vedieo xml format data//
+            services.AddMvc().AddXmlSerializerFormatters();
+            services.AddControllersWithViews();
+            //services.AddMvcCore();
+            //add dependency injection/
+            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
+            services.AddMvc(options =>
+            {
+                options.EnableEndpointRouting = false;
+            });
+        }
+and after taht add app.usemvc()
+now go to Home controller
+
+  [Route("Home/Details/{id?}")]
+        public ViewResult Details(int? id)
+        {
+         HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
+         {
+          Employee = _employeeRepository.GetEmployee(id??1),
+          PageTitle = "EmployeeDetails"
+
+        };
+                                     
+        return View(homeDetailsViewModel);
+        }
+
+        public class WelcomeController : Controller
+    {
+        private IEmployeeRepository _employeeRepository;
+
+        // Constructor with dependency injection
+        public WelcomeController(IEmployeeRepository employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+        }
+        [Route("")]
+        [Route("Home")]
+        [Route("Home/Index")]
+        public ViewResult List()
+        {
+            var model = _employeeRepository.GetEmployeeList();
+            return View("~/Views/Home/Index.cshtml",model);
+        }
+
+
+
+        
+  [Route("[controller]/[action]")]
+    public class HomeController : Controller
+    {
+}
+        [Route("~/Home")]
+        [Route("~/")]
+        public ViewResult Index()
+        {
+            var model = _employeeRepository.GetEmployeeList();
+            return View( model);
+        }
+       [Route("{id?}")]
+        public ViewResult Details(int? id)
+        {
+         HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
+         {
+          Employee = _employeeRepository.GetEmployee(id??1),
+          PageTitle = "EmployeeDetails"
+
+        };
+
+//part 34 Tools to install Client-Side Packages
+step 1- project visual studio help menu About visual studio
+after click help menu update new verion
+step 2 right click project add-clit-side click
+open small vindow
+type twitter bootstrap instal
+after go to libman.json
+add jquery file
+},
+    {
+      "library": "jquery@3.7.1",
+      "destination": "wwwroot/lib/jquery/"
+    }
+
+after that add file in  Layout.cshtm
+ <link href="~/lib/twitte-bootstrap/css/bootstrap.css"rel="stylesheet" />
+after addition go index.cshtml
+<div class="card-check">
+@foreach(var employee in Model)
+{
+<div class="card m-3">
+<div class="card-header">
+<h3>@employee.Name</h3>
+</div>
+<img class="card-img-top" src="~/iMAGES/NOIMAGE.JPG"/>
+<DIV CLASS="card-footer text-center">
+<a href="#" class="btn btn-primary">View</a>
+<a href="#" class="btn btn-primary">Edit</a>
+<a href="#" class="btn btn-primary">Delete</a>
+</div>
+</div>
+}
+</div>
+
+go to details.cshtml
+
+//part 35 Tag helper in ASP.NET CORE//
+tAG HELPER 1-Server side components
+ 2-Produced on the server to create and render HTML ELEMENTS
+3-Similar to HTML
+4-bUILD-INTag helpers -generates links creating forms loading assets..etc
+syntax importing Tag helper
+@assTaghelper,Microsoft.AspnetCore.Mvc.Taghelpers
+Add Tag helper action link
+three type
+
+<a asp-controller="Home" asp-action="Details" asp-route-id="@employee.id" class="btn btn-primary">Show</a>
+
+ <a href="@Url.Action("Details", "Home", new { id = employee.id })" class="btn btn-primary">Show</a>
+
+  <!--<a href="@Url.Action("Details", "Home", new { id = employee.id })"
+    class="btn btn-primary">Show</a>-->
+                    @*//2-method  add tag helper//*@
+
+
+                    @*@Html.ActionLink("View", "Details", new { id = employee.id })*@@*//3-method  add tag helper//*@
+
+                    @*<a href="/home/Details/@employee.id" class="btn btn-primary">View</a>*@@*//2-method  add tag helper//*@
+                    @*<a href="#" class="btn btn-primary">View</a>*@ @*//1-method  add tag helper//*@*
+Or go to Details.cshtml
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back</a>
+
+//Part 37 Asp.net core Image Tag Helper//
+
+Step 1-Go To Image Folder-in projects change name-1.Image afer run projects
+
+<a asp-controller="Home" asp-action="Details" asp-route-id="@employee.id" class="btn btn-primary">Show</a>
+
+
+//part 38 Asp.net core Environment Tag helper//
+The Application environment name is set using ASP.NETCORE_ENVIRONMENT
+Variable
+step1-Go to Projects-properties Lounchsetting.json
+"ASPNETCORE_ENVIRONMENT": "Development" already development
+
+<Environment include="Development">
+    
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+</Environment>
+Environment helper tag supports rendering different ontent ication environment
+step2 -_Layout.cshtml
+ <meta name="viewport" content="width=device-width" />
+    <Environment include="Development">
+        <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    </Environment>
+    <Environment exclude="Development">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"             
+              asp-falback-href="~/lib/bootstrap/css/bootstrap.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-value="absolute"
+              asp-suppress-fallback-integrity="true">
+    </Environment>
+run 
+part 39-Bootstrap navigation menu ASP.NET CORE
+ON lARGE SCREEN DEVICE
+Step1-Go TO lOUNCHSETTING.JSON
+change environment -Development
+
+Go to _Layout.cshtml
+inside bdy tag
+<body>
+<div class="container">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <img src="~/usaflag.jpeg" height="30" width="30" />
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#collapsemenubar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse-navbar-collapse" id="collapsemenubar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="Index" class="nav-link">List</a>
+
+                    </li>
+                    <li>
+                        <a asp-action="Index1" asp-controller="Home" class="nav-link">Create</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div>
+            <script src="~/JS/Custom.Script.js"></script>
+            @RenderBody()
+        </div>
+    </div>
+</boody>
+//Afer right click project add clint ide liberary-jquery-install
+and after that dragand upon _Layout.cshtml
+<script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+both file
+then run toggle button expected work
+-------------------------------------------------------------------
+// part 40 
+Form Tag helper 
+1-Form Tga helper
+2-Input Tag Helper
+3-Label Tag helper
+4-Seelct Tag helper
+5-TextArea Tag helper
+6-Validation Tag helper
+Step 1-After that click Menu item  Create Click
+Go To Controller Home create ActionResult
+
+  public ViewResult Create()
+        {
+            return View();
+        }
+after add Home folder View-Create .cshtml
+
+ @model Employee
+@{ 
+    ViewBag.Title = "Create Employee";
+}
+<form asp-controller="Home"asp-action="Create" method="post" class="mt-3">
+    <div class="form-group-row">
+        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+        <input asp-for="Name" class="=form-control" placeholder="Name" />
+    </div>
+
+    <div class="form-group-row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <input asp-for="Email" class="=form-control" placeholder="Email" />
+    </div>
+    <div class="form-group-row">
+        <label asp-for="Department" class="col-sm-2 col-form-label"></label>
+        <select asp-for="Department" asp-items="Html.GetEnumSelectList<Dept>()" class="custom-select mr-sm-2"></select>
+    </div>
+    <div class="form-group-row">
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+</form>
+and add model ffolder class Dept
+
+    public enum Dept
+    {
+        None,
+        HR,
+        IT,
+        Payroll,
+    }
+}
+change the Department dept tdata typr
+
+public class Employee
+    {
+        public int id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public Dept Department { get; set; }
+    }
+
+after that Go to MockemployeeRpository.cs
+
+ public MockEmployeeRepository()
+        {
+            _employeeList = new List<Employee>()
+            {
+                //new Employee() { id = 1, Name = "Mary",Email="Mary@pragamtech.com", Department = "HR" },
+                //new Employee() { id = 2, Name = "John", Email="John@pragamtech.com", Department = "IT" },
+                //new Employee() { id = 3, Name = "Sam", Email="Mary@pragamtech.com", Department = "IT" },
+                // Vedio 40 dEPT
+                 new Employee() { id = 1, Name = "Mary",Email="Mary@pragamtech.com", Department = Dept.None},
+                new Employee() { id = 1, Name = "Mary",Email="Mary@pragamtech.com", Department = Dept.HR},
+                new Employee() { id = 2, Name = "John", Email="John@pragamtech.com", Department = Dept.IT},
+                new Employee() { id = 3, Name = "Sam", Email="Mary@pragamtech.com", Department = Dept.Payroll},
+
+            };
+
+
+
+//41 Asp.net core Model binding//
+Model binding maps data in HTTP Request  to Controller action method parameter
+The action paramaeter may be simple types such as intigers, string,etc
+public string Details2(int?id, string name)
+        {
+            return "id=" + id.Value.ToString() + "name=" + name;
+        }
+
+run 
+https://localhost:5001/Home/Details2?id=2&name=Hafij
+get values
+2 hafij
+To BIND The request data to the controller action method parameters,model binding looks for data in the HTTP Request
+1-Form Values
+2-Route vALUES
+3-qUERY string
+Step 1 Go to The Applicatio run after click Create button
+then save the data
+now go to the Controller Create action method
+
+        [HttpGet]
+        public ViewResult Create()
+        {
+            return View();
+        }
+After that go IEmployee.cs
+add method
+
+ public interface IEmployeeRepository
+    {
+       
+        // vedieo 41//
+        Employee Add(Employee employee);
+    }
+After that go to MockEmployeeRepository
+
+Implements
+
+ public Employee Add(Employee employee)
+        {
+            employee.id=_employeeList.Max(e => e.id)+1;
+            _employeeList.Add(employee);
+            return employee;
+        }
+After that go Home controller
+        [HttpPost]
+        public RedirectToActionResult Create(Employee employee)
+        {
+            Employee newemployee = _employeeRepository.Add(employee);
+            return RedirectToAction("Details",new { id = newemployee.id });
+        }
+then run and see add new employee
+in list
+-------------------------------------------------------------------
+
+// Part 42 Asp.net Core Model validation//
+Step 1-Employee class
+
+  public class Employee
+    {
+        public int id { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email format.")]
+        [Display(Name ="Office Email")]
+        public string Email { get; set; }
+        [Required]
+        public Dept Department { get; set; }
+    }
+}
+
+and after that go to the create.cshtml
+
+@model Employee
+@{ 
+    ViewBag.Title = "Create Employee";
+}
+<form asp-controller="Home"asp-action="Create" method="post" class="mt-3">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group-row">
+        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+        <input asp-for="Name" class="=form-control" placeholder="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group-row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <input asp-for="Email" class="=form-control" placeholder="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group-row">
+        <label asp-for="Department" class="col-sm-2 col-form-label"></label>
+        <select asp-for="Department" asp-items="Html.GetEnumSelectList<Dept>()" class="custom-select mr-sm-2">
+<option value="">Please Select </option></select>
+        <span asp-validation-for="Department" class="text-danger"></span>
+    </div>
+
+    <div class="form-group-row">
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+</form>
+and after that
+
+[HttpPost]
+        public IActionResult Create(Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                Employee newemployee = _employeeRepository.Add(employee);
+                return RedirectToAction("Details", new { id = newemployee.id });
+            }
+            return View();
+        }
+
+add interface class IEmployee
+
+    public interface IEmployeeRepository
+    {
+        Employee GetEmployee(int Id);
+       IEnumerable<Employee> GetEmployeeList();//Display value in table or list
+        // vedieo 41//
+        Employee Add(Employee employee);
+    }
+ public Employee Add(Employee employee)
+        {
+            employee.id=_employeeList.Max(e => e.id)+1;
+            _employeeList.Add(employee);
+            return employee;
+        }
+//part44 AddSingleton vs AddScoped vs AddTransient//
+Step 1- first go to check IEmployeeRepository
+ public interface IEmployeeRepository
+{
+
+Ienumbrable<Employee>GetEmployeeList();//return all employee list
+}
+
+after that go to 
+create.cshtml
+@inject IEmployeeRepository _employeerepository
+
+page side
+<div class="form-group-row">
+        <div class="co-sm-10">
+            Total Number Employee=@_employeerepository.GetEmployeeList().Count();
+        </div>
+    </div>
+after that run program create click button everytime increment count employee
+becos ith gleton vices,there is only a single instance,An nstance is created, when the service is first request and that single instance is used by all http request throufgout e application
+
+add service addscoped in startup.cs
+ services.AddScoped<IEmployeeRepository, MockEmployeeRepository>();
+afte  run program
+ with a scoped service we get the same instance within the scope of a given htttp uest but a new instance across different p requests
+
+now AddTrnsient
+services.AddTransient<IEmployeeRepository, MockEmployeeRepository>();
+
+with a transient services a new instance is provided every time an instance a requested whether it is in the scope of the same http request or acrros different http request
+---------------------------------------------------------------------
+
+//Part 45 Asp.net introduction to entity framework//
+is also called EF CORE
+1-ORM(object-reletion Mapper)
+2-Lightwieght,Extensible,and Open Source
+3-Work Cross Platform
+4-Microsoft's Official DataACCES pLATFORM
+ORM 
+Domain class
+public class Employee
+{
+  properities
+}
+public class
+entity core
+database
+code first & Database First  approach
+ Domain&DBCONTEXT ===>EF ORE===Database(Code first approach)
+
+Database==>Efcore===>domain&DBcONTEXT CLasses
+
+EFCore Database Providers
+EFCORE<===>Database provider==>Database
+-----------------------------------------------------------------
+//part 46 install entity framework core in visual studio//
+multi layer supported
+go project dependencies folder-Framework folder-expand-Microsost.asp.ntcore expand that packae is called meta packages is list of dependencies//
+after create new project in solution explorer right click solution explorer add new project -class liberary -EmployeeManagement.DataAccess=ADD
+THEN AFTER THERE NO ANY FRAMEWORK INSTALL
+SO go to install Entity Framework Three  packages
+1-Microsoft.EntityFrameworkCore.SqlServer(2.2.0) install
+2-Microsoft.EntityFrameworkCore.Reletional
+3-Microsoft.EntityFrameworkCore
+after that employeeManagement.DataACCESS-RIHGT CLICK nuget pakcge-browse
+Microsoft.EntityFrameworkCore.SqlServer(2.2.4) install
+after instaleetion remove the EmployeeManagement.DataAccess
+now if you want install MySQL can also install package my sql
+
+-------------------------------------------------------------------
+
+//Part 47 Asp.net core Add DBContext in entity framework core//
+this class intracted with database this class releted to the Model folder
+step1 -gO mODEL-Folder Right Click Add new class-
+AppDbContext is also derived base class DbContext
+and dbcontext class object dbcontextoptions clalss is inhiretd :base(options)
+
+using EmployeeMangement.Models;
+using Microsoft.EntityFrameworkCore;  // Only the necessary using directive
+
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
+
+    // Add DbSets here
+    private DbSet<Employee> Employees { get; set; }
+}
+
+// prt 48 configure uing SQL Serve entity framwork  core//
+Step1-Confgire Metho in go Startup.cs File and configure applicationpool
+
+  public void ConfigureServices(IServiceCollection services)
+        {
+
+            // vedieo 48 configure sql server entity framework//
+            services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_conguration.GetConnectionString("EmployeeDBConnection")));
+
+step 2-go to appsetting.json
+"AllowedHosts": "*",
+
+  "MyKey": "Value of mykey from appsetting.json",
+  "ConnectionStrings": { "EmployeeDBConnection": "LAPTOP-V222TVKB\\SQLEXPRESS; Data Sorce=EmployeeDB; Trusted-Connecton=true;"}
+
+// part 49 Repository pattern in Asp.net core//
+Repository pattern is an abstraction of the DataACCESS HIDE DETAILS
+and how to  exactly datasave nd  retrived from underline datasource
+perform All crud operation create  rean date and delete
+Step 1-Go IEmployeeRepostitry  class
+add two method
+
+  public interface IEmployeeRepository
+    {
+      Employee Update(Employee employee);
+        Employee Delete(int id);    
+}
+after that go to MockEmployeeRepository--implement
+implement method
+
+public Employee Delete(int id)
+        {
+            Employee employee = _employeeList.FirstOrDefault(e => e.id == id);
+            if(employee!=null)
+            {
+                _employeeList.Remove(employee);
+            }
+            return employee;
+        }
+
+
+  public Employee Update(Employee employee)
+        {
+            Employee employee1 = _employeeList.FirstOrDefault(e => e.id == employee.id);
+            if (employee1 != null)
+            {
+                employee1.Name = employee.Name;
+                employee1.Email = employee.Email;
+                employee1.Department = employee.Department;
+            }
+
+
+ Repository pattern in Asp.net core
+
+implement repository============>IEmployeerepository
+
+SQL repository==================>(Create,Read,Update,Delete)
+Step 2-Now Add New Class in Model SqlEmployeeRepository and implement IEmployeerepository
+
+ public class SQLEmployeeRepository : IEmployeeRepository
+    {
+        private readonly AppDbContext dbcontext;
+
+        public SQLEmployeeRepository(AppDbContext dbcontext)
+        {
+            this.dbcontext = dbcontext;
+        }
+        public Employee Add(Employee employee)
+        {
+            dbcontext.Employees.Add(employee);
+            dbcontext.SaveChanges();
+            return employee;
+        }
+
+        public Employee Delete(int id)
+        {
+            Employee employee = dbcontext.Employees.Find(id);
+            if (employee != null)
+            {
+                dbcontext.Employees.Remove(employee);
+                dbcontext.SaveChanges();
+            }
+            return employee;
+        }
+
+        public Employee GetEmployee(int Id)
+        {
+            return dbcontext.Employees.Find(Id);
+        }
+
+        public IEnumerable<Employee> GetEmployeeList()
+        {
+            return dbcontext.Employees.ToList();
+        }
+
+        public Employee Update(Employee employee)
+        {
+            var Employee = dbcontext.Employees.Attach(employee);
+            Employee.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            dbcontext.SaveChanges();
+            return employee;
+        }
+    }
+
+
+step3-Register dependency injection in startup.cs file
+
+services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
+after that run program getting error
+
+//Pr 50 Add migration//
+migration is keeps the database schema and application model classes in sync
+
+Step 1-Open -view Menu-windowsoption-packagemanager 
+
+Unable  the Microsoft visual studio debug Console.
+if this problem continues repair the visual studio installetion,or enable
+Tools-Options-Debugg-Automatically close the console when debug start
+ pm> dotnet clean-press enter
+pm>Add-Migration "Initial Create"--press enter
+pm>Update-Database-press eter 
+afte that check in database-sql server has been created 
+
+After that run  program menuitem nd add data 
+create--
+
+
+// part 51 ASP.NEt core Seed data //
+
+Step 1-AppDbContect class
+public DbSet<Employee> Employess{get;set;}
+
+add override method
+type override onmodelcreating
+ protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Employee>().HasData(
+              new Employee
+              {
+                  id=1,
+                  Name="Mary",
+                  Department=Dept.IT,
+                  Email="Mary@pragimtech.com"
+                  
+              },
+
+                 new Employee
+                 {
+                     id = 2,
+                     Name = "John",
+                     Department = Dept.HR,
+                     Email = "John@pragimtech.com"
+
+                 }
+
+
+            );
+         
+    }
+}
+
+but we want to seprate codethen we can create class modelbulder class inside Model
+
+public static class ModelBuilderExtention
+    {
+        public static void Seed(  this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>().HasData(
+              new Employee
+              {
+                  id = 1,
+                  Name = "Mary",
+                  Department = Dept.IT,
+                  Email = "Mary@pragimtech.com"
+
+              },
+
+                 new Employee
+                 {
+                     id = 2,
+                     Name = "John",
+                     Department = Dept.HR,
+                     Email = "John@pragimtech.com"
+
+                 }
+
+
+            );
+
+and also go appdbcontext class
+
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Seed();
+    }
+then build and run it will be work same
+// part 52 keeping domain model in database schema sync//
+Step1 -Add new column Path
+inside Employee class
+
+public string PhotoPat { get; set; }
+after that migration
+
+Add-Migration AddPhotoPatColumn
+aftrt that
+ employee classs
+ public int someproperty { get; set; }
+
+ Add-Migration Addsomeproperty
+remove-migration
+tow times
+remove-migration
+
+if three time 
+remove-migration
+The migration '20250225154626_AlterseedEmployessTable' has already been applied to the database. Revert it and try again. If the migration has been applied to other databases, consider reverting its changes using a new migration.
+becos already Udate-dataabse
+so it is not removing removing
+
+so go Employee class 
+someprerty column remove
+after 
+add-migration AddPhotopatColumn
+sucedded
+Update-database
+
+then created database inside column new column Photopat
+check it in database
+
+now add new column  someproert
+Add-migration addsomeproprty
+Update-database
+has been successfully create
+how can remove last two record
+remove-migration
+not working
+the go to database table open table there -EFMigrationhistory
+open show table
+
+and copy alterphopath
+
+pm>Update-database paste here Alterphotpath
+then after remove 
+
+   public class Employee
+    {
+        [Key]
+        public int id { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email format.")]
+        [Display(Name ="Office Email")]
+        public string Email { get; set; }
+        [Required]
+        public Dept? Department { get; set; }
+
+        public string PhotoPath { get; set; }
+            }
+
+  PM> Add-migration AddPhotoPathColumn
+  PM> update-database
+enter after that check Database column has been create 
+-------------------------------------------------------------------------
+//Part 53 Upload File in asp.net core//
+Step 1 Go to Craete.cshtml-add one design filed  Photopath ----------Browse button
+so first go to one new class IN vIEWmODELfolder class
+
+public class EmployeeCreateViewModel
+    {
+(copy and pase from employee class id column no need)
+     
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",             ErrorMessage = "Invalid email format.")]
+        [Display(Name = "Office Email")]
+        public string Email { get; set; }
+        [Required]
+        public Dept? Department { get; set; }
+
+        public IFormFile Photo { get; set; }// change datatype IFORMFILE AND photo
+    }
+after that go to create.cshtml
+@model EmployeeCreateViewModel
+  <div class="form-group-row">
+        <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input asp-for="Photo" class="=form-control custom-file-input" />
+                <label class="custom-file-label">Choose file..</label>
+                
+            </div>
+        </div>
+        </div>
+After that(add enctype=enctype="multipart/form-data")<form asp-controller="Home" asp-action="Create" method="post" class="mt-3" enctype="multipart/form-data">
+step2
+ @section Script{ 
+
+    <script>
+        $(document).ready(function)(){
+            $('.custom-file-input').on("change", function () {
+            var filename = $(this).val().split("\\").pop();
+            $(this).next('.custom-file-label').html(filename);
+        });
+       }
+    </script>
+    }
+step3- Go to controller inject iwebhosting environment
+
+private IWebHostEnvironment _webHostEnvironment;
+ public HomeController(IEmployeeRepository employeeRepository,IWebHostEnvironment webHostEnvironment)
+        {
+            _employeeRepository = employeeRepository;
+            _webHostEnvironment = webHostEnvironment;
+        }
+Step 4- [HttpPost]
+        public IActionResult Create(EmployeeCreateViewModel model)
+       {
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = null;
+                if (model.Photo != null)
+                {
+                    if (_webHostEnvironment == null)
+                    {
+                        // Log an error or throw a more specific exception
+                        throw new InvalidOperationException("webHostEnvironment is not initialized.");
+                    }
+
+                    string Uploadfolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+
+                    // Ensure the upload folder exists
+                    if (!Directory.Exists(Uploadfolder))
+                    {
+                        Directory.CreateDirectory(Uploadfolder);
+                    }
+
+                    // Create a unique filename
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
+                    string filepath = Path.Combine(Uploadfolder, uniqueFileName);
+
+                    try
+                    {
+                        // Copy the file to the server
+                        using (var fileStream = new FileStream(filepath, FileMode.Create))
+                        {
+                            model.Photo.CopyTo(fileStream);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle exceptions (e.g., log the error or notify the user)
+                        throw new Exception("An error occurred while uploading the file.", ex);
+                    }
+                }
+
+                Employee NewEmployee = new Employee {
+
+                    Name = model.Name,
+                    Email=model.Email,
+                    Department=model.Department,
+                    PhotoPath=uniqueFileName
+                
+                };
+                _employeeRepository.Add(NewEmployee);
+               return RedirectToAction("Details", new { id = NewEmployee.id });
+           }
+           return View();
+        }
+        // vedio 53 Upload photo close//
+Step 5- Go to Details.cshtml
+
+@{
+    // Set the layout file (this is commented out in your code, but if you want to use it, you can uncomment it)
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Set page title
+    ViewBag.Title = "Employee Details";
+
+    // Set HTML title tag
+    <title>Employee Details</title>
+
+    // Photo upload code//
+    var photoPath = "~/Images/" + (Model.Employee.PhotoPath ?? "human.jpg");
+}
+
+
+after that change
+<div class="card-body d-flex align-items-center">
+                    <div class="col-md-4 text-center">
+                        @*<img src="~/Images/human.jpg" class="img-fluid rounded" alt="Employee Image" asp-append-version="true" />*@
+                        <img src="@photoPath" class="img-fluid rounded" alt="Employee Image" asp-append-version="true" />
+                    </div>
+         
+
+now after that run and create new employee but images very large show 
+go to projects css ile
+----------------------------------------------------------------------------
+
+// part 54 Upload multiple file in asp.net core//
+
+Step 1 Go to Create.csthml
+<input multiple asp-for="Photo" class="form-control custom-file-input">
+and run
+step 2-
+change jquery code
+chane class file
+  public class EmployeeCreateViewModel
+    {
+     // vedieo 54 multiple photo selecred//
+        public List<IFormFile> Photos { get; set; }
+
+        //close 54//
+} 
+
+now change code in controller
+[HttpPost]
+        public IActionResult Create(EmployeeCreateViewModel model)
+       {
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = null;
+                if (model.Photos != null && model.Photos.Count > 0)
+                {
+
+                    foreach (IFormFile photo in model.Photos)
+
+                    {
+                        if (_webHostEnvironment == null)
+                        {
+                            // Log an error or throw a more specific exception
+                            throw new InvalidOperationException("webHostEnvironment is not initialized.");
+                        }
+
+                        string Uploadfolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+
+                        // Ensure the upload folder exists
+                        if (!Directory.Exists(Uploadfolder))
+                        {
+                            Directory.CreateDirectory(Uploadfolder);
+                        }
+
+                        // Create a unique filename
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                        string filepath = Path.Combine(Uploadfolder, uniqueFileName);
+
+                        try
+                        {
+                            // Copy the file to the server
+                            using (var fileStream = new FileStream(filepath, FileMode.Create))
+                            {
+                                photo.CopyTo(fileStream);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle exceptions (e.g., log the error or notify the user)
+                            throw new Exception("An error occurred while uploading the file.", ex);
+                        }
+                    }
+                }
+
+                Employee NewEmployee = new Employee {
+
+                    Name = model.Name,
+                    Email=model.Email,
+                    Department=model.Department,
+                    PhotoPath=uniqueFileName
+                
+                };
+                _employeeRepository.Add(NewEmployee);
+               return RedirectToAction("Details", new { id = NewEmployee.id });
+           }
+           return View();
+        }
+
+after that go to Create.cstml
+  @section Script{
+
+        <script>
+            $(document).ready(function)(){
+                $('.custom-file-input').on("change", function () {
+                    var fileLabel = $(this).next('.custom-file-label');
+                    var files = $(this)[0].files;
+                    if (files.length > 1) {
+                        fileLabel.html(files.length + 'files selected');
+                    }
+                    else if (files.length == 1) {
+                        fileLabel.html(files[0].name)
+                    }
+               
+            });
+            });
+after that run and test
+----------------------------------------------------------------------------
+
+// vedio 55 Edit View in Asp.net core//
+Step 1-Go to Index.cshtml
+change <a href="#" asp-action="edit"  asp-controller="Home"
+asp-route-id="@@employee.Id" class="btn tn-primary>
+
+and also change  details.cstml
+
+<a href="#" asp-action="edit"  asp-controller="Home"
+asp-route-id="@model.Employee.id" class="btn btn-primary">
+after that run then 
+remove 
+< href="#"> both 
+and that run program
+Click edit=localhost:15433/Home/edit/1
+http error-404
+
+AFTER THAT GO Home copy and paset create action method and change name
+
+  [HttpGet]
+        public ViewResult Edit(int id)
+        {
+            return View();
+        }
+After that run program 
+get the error /Views/Home/Edit.cshtml
+
+Step 3 Now Create class inside Viewmodel-EmployeeEditViewModel
+
+   public class EmployeeEditViewModel: EmployeeCreateViewModel
+    {
+        public int id { get; set; }
+        public string  ExistingPhotoPath { get; set; }
+    }
+ create view inside Home edit view 
+Edit.chtml
+and copy paste same code from create.cshtml
+
+and eidt
+@model EmployeeEditViewModel
+@{
+    ViewBag.Title = "Create Employee";
+    var photoPath = "~/Images/" + (Model.ExistingPhotoPath ?? "human.jpg");
+}
+
+<form asp-controller="Home" asp-action="Edit" method="post" class="mt-3" enctype="multipart/form-data">
+    <!-- Hidden fields for ID and existing photo path -->
+    <input type="hidden" asp-for="id" />
+    <input type="hidden" asp-for="ExistingPhotoPath" />
+
+    <!-- Validation summary -->
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <!-- Name input -->
+    <div class="form-group-row">
+        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Name" class="form-control" placeholder="Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Email input -->
+    <div class="form-group-row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" placeholder="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Department select -->
+    <div class="form-group-row">
+        <label asp-for="Department" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="Department" asp-items="Html.GetEnumSelectList<Dept>()" class="custom-select mr-sm-2">
+                <option value="">Please Select</option>
+            </select>
+        </div>
+        <span asp-validation-for="Department" class="text-danger"></span>
+    </div>
+
+    <!-- Photos input -->
+    <div class="form-group-row">
+        <label asp-for="Photos" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input multiple asp-for="Photos" class="form-control custom-file-input" />
+                <label class="custom-file-label">Click here to change photo</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit and Cancel buttons -->
+    <div class="form-group-row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+
+    <!-- Display photo -->
+    <div class="form-group row col-sm-2 offset-4">
+      
+            <img src="@photoPath" class="ImageTumbnail" asp-append-version="true"/>
+       
+    </div>
+        </div>
+    </div>
+
+    @section Script {
+        <script>
+            $(document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var fileLabel = $(this).next('.custom-file-label');
+                    var files = $(this)[0].files;
+                    if (files.length > 1) {
+                        fileLabel.html(files.length + ' files selected');
+                    }
+                    else if (files.length == 1) {
+                        fileLabel.html(files[0].name);
+                    }
+                });
+            });
+        </script>
+    }
+</form>
+after that run
+//part 56 Httpost Action method in asp.net core click on Update//
+
+Step 1-Addnew action method post edit copy and pase Create hhtpost method
+
+ [HttpPost]
+        public IActionResult Edit(EmployeeEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //step1 get employee//
+                Employee employee = _employeeRepository.GetEmployee(model.id);
+                employee.Name = model.Name;
+                employee.Email = model.Email;
+                employee.Department = model.Department;
+                if (model.Photos != null)
+                {
+                    if(model.ExistingPhotoPath!=null)
+                    {
+                      string filepath = Path.Combine(_webHostEnvironment.WebRootPath,"Images",model.ExistingPhotoPath);
+                        System.IO.File.Delete(filepath);
+                    }
+                    employee.PhotoPath = ProcessUploadedFile(model);
+                }
+                //Employee NewEmployee = new Employee
+                //{
+
+                //    Name = model.Name,
+                //    Email = model.Email,
+                //    Department = model.Department,
+                //    PhotoPath = uniqueFileName
+
+                //};
+                _employeeRepository.Update(employee);
+                return RedirectToAction("index", new { id = employee.id });
+            }
+            return View();
+        }
+
+    private string ProcessUploadedFile(EmployeeCreateViewModel model)
+        {
+            string uniqueFileName = null;
+            if (model.Photos != null && model.Photos.Count > 0)
+            {
+
+                foreach (IFormFile photo in model.Photos)
+
+                {
+                    if (_webHostEnvironment == null)
+                    {
+                        // Log an error or throw a more specific exception
+                        throw new InvalidOperationException("webHostEnvironment is not initialized.");
+                    }
+
+                    string Uploadfolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+
+                    // Ensure the upload folder exists
+                    if (!Directory.Exists(Uploadfolder))
+                    {
+                        Directory.CreateDirectory(Uploadfolder);
+                    }
+
+                    // Create a unique filename
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                    string filepath = Path.Combine(Uploadfolder, uniqueFileName);
+
+                    try
+                    {
+                        // Copy the file to the server
+                        using (var fileStream = new FileStream(filepath, FileMode.Create))
+                        {
+                            photo.CopyTo(fileStream);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle exceptions (e.g., log the error or notify the user)
+                        throw new Exception("An error occurred while uploading the file.", ex);
+                    }
+                }
+            }
+
+            return uniqueFileName;
+        }
+        //vedieo 56 Update view model//
+    }
+}
+
+AFTER THAT CHANGE CRETE METHOT ALSO
+
+     [HttpPost]
+        public IActionResult Create(EmployeeCreateViewModel model)
+       {
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = null;
+                uniqueFileName = ProcessUploadedFile(model);
+
+                Employee NewEmployee = new Employee
+                {
+
+                    Name = model.Name,
+                    Email = model.Email,
+                    Department = model.Department,
+                    PhotoPath = uniqueFileName
+
+                };
+                _employeeRepository.Add(NewEmployee);
+                return RedirectToAction("Details", new { id = NewEmployee.id });
+            }
+            return View();
+        }
+Then run program and check it etails
+--------------------------------------------------------------------------------
+//Part57 handling 404 notfound in asp.net core//
+ Theere is two type 404 error
+1-Resource with the specified ID does not exist.//
+after run program click show in but url id change there not database i
+an unhandles exception occurs while processing
+we can handle
+
+Step1 -Go Home controller
+
+public ViewResult Details(int? id)
+        {
+
+
+            Employee employee = _employeeRepository.GetEmployee(id.Value);
+            if(employee==null)
+            {
+                Response.StatusCode = 404;
+                return View("Not Found", id.Value);
+            }
+            HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
+            {
+                Employee = employee,
+                PageTitle = "Employee Details"
+
+            };
+            return View(homeDetailsViewModel);
+        }
+now lets add new view Not  Found EmployeeNotFound.cshtml
+
+@model int
+@{ 
+    ViewBag.Title="404 error"
+}
+<div class="alert alert-danger mt-1 mb-1">
+    <h4>404 Not Found Error:</h4>
+    <hr/>
+    <h5>
+        Employee With Id:@Model can not be found 
+    </h5>
+</div>
+<a asp-action="Index" asp-controller="Home" class="btn btn-outline-success">
+    Click here see employee list
+</a>
+after taht run
+step 2
+Type2: The URL Does not match any route
+http://localhost/foo/bar
+// part 58 handle error centralized 404 error handling in Asp.net Core//
+Step 1-Startup.cs
+
+public void Configure( app, env)
+{
+  if (env.IsProduction())
+            {
+
+            //vedieo 58 not found//
+
+            else
+            {
+                app.UseStatusCodePagesWithRedirects("/Error/{}0");
+            }
+AFTR THAT GO LOUNCHSETTING.JSON
+ "ASPNETCORE_ENVIRONMENT": "Production"// vedieo 58 eroor not found change production
+
+now add errorcontroller in controller folder
+
+   public class ErrorController : Controller
+    {
+        [Route("Error/{statusCode}")]
+        public IActionResult HttpStatusCodeHnadler(int statusCode)
+        {
+            switch(statusCode)
+            {
+                case 404:
+                    ViewBag.message = "sorry the resource you requested not found";
+                    break;
+            }
+            return View();
+        }
+    }
+//part 59 UseStatusCodePageswithRedirects vs UseStatusCodePagesWithReexecute//
+Go startup.cs
+
+
+ //app.UseStatusCodePagesWithRedirects("/Error/{0}");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
+that pass the request sataic file middleware and
+app.usemvc() pass request
+
+after that go to Error controller
+
+//Part 60 Global exception handling in asp.net core//
+Home controller
+
+public Viewresult Details(int?id)
+{
+add code
+ throw new exception("Error in Details view");
+}
+and also chang elounchseting.json -development envireonment
+"ASPNETCORE_ENVIRONMENT": "Production"// vedieo 60 eroor not found change production
+after run
+getiing error 500
+that means go to Startup.cs 
+else
+            {
+                // vedieo 60 exception//
+                app.UseExceptionHandler("/Error");
+                //close vedio60//
+
+}
+
+Error controller
+[Route("Error")]
+        [AllowAnonymous]
+        public ActionResult Error()
+        {
+            var exceptiondetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            ViewBag.ExceptionPath = exceptiondetails.Path;
+            ViewBag.excemessage = exceptiondetails.Error.Message;
+            ViewBag.Stacktrace = exceptiondetails.Error.StackTrace;
+            return View("Error");
+        }
+    }
+
+now add shared folde new razor view error
+<h3>
+    An  occured while processing your request.
+    The support team notify and we are working on fix
+</h3>
+<h5>
+    please contact us an pragim@pragimtech.com
+</h5>
+<hr/>
+<h3>Exception Details</h3>
+<div class="alert alert-danger">
+    <h5>Exception Path</h5>
+    <hr/>
+    <p>@ViewBag.ExceptionPath</p>
+</div>
+<div class="alert alert-danger">
+    <h5>Exception Message</h5>
+    <hr />
+    <p>@ViewBag.excemessage</p>
+</div>
+<div class="alert alert-danger">
+    <h5>Exception Stack trace</h5>
+    <hr />
+    <p>@ViewBag.Stacktrace</p>
+</div>
+
+
+
+============================================================================
+//Pat 61 Logging in Asp.net core//
+Step1- Run in deugg mode-IISExpress-
+menu -Outpt window and see 
+step 2-Lounchsetting.json
+"Microsoft":"information"
+after stop debugging
+Then Go to command prompt windowrun as ad administration
+
+could not find a project to run.Endure a projects exist in C:\Users\HAFIJ AHMAD\Desktop\Projects Training\.netcoreproject\EmployeeManagement" or pass the path to the project using--project.
+
+'Unable to start the Microsoft visual studion debug console
+if this problem continueesrepair the visual Studio installetion,or enable
+Tools-Otions-Debugging-Automatically close the console the when debugging stop
+
+//62 Logging Exception in Asp.net Core//
+Step 1- go to Error controller 
+include constructor//
+
+        private readonly ILogger<ErrorController> logger;
+
+        /// <summary>
+        ///  62 Logging Exception in Asp.net Core//
+        /// </summary>
+        /// <param name="statusCode"></param>
+        /// <returns></returns>
+        public ErrorController(ILogger<ErrorController> logger)
+        {
+            this.logger = logger;
+        }
+
+
+
+// step 2// public ActionResult Error()
+        {
+            var exceptiondetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            //START 62 COOMENT CODE//
+            //ViewBag.ExceptionPath = exceptiondetails.Path;
+            //ViewBag.excemessage = exceptiondetails.Error.Message;
+
+            //ViewBag.Stacktrace = exceptiondetails.Error.StackTrace;
+            logger.LogError($"The path { exceptiondetails.Path} " +
+                $"threw exception{exceptiondetails.Error}");
+
+
+            return View("Error");
+
+
+
+// step 3//
+
+public IActionResult HttpStatusCodeHnadler(int statusCode)
+        {
+            var stsuscoderesult = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
+            switch (statusCode)
+            {
+                case 404:
+                    ViewBag.message = "sorry the resource you requested not found";
+                    //add code 62 looger here//
+                    logger.LogWarning($"404 Error occured path={stsuscoderesult.OriginalPath}"+
+                        $"and querystring={stsuscoderesult.OriginalQueryString}");
+                    break;
+            }
+            return View("NotFound");
+
+// NotFound go hml// comment code
+//and also comment error .cstml code//
+run and check
+
+//part 63-Looging to File in Asp.net core using Nlog//
+ there is provide so many third party Logging providers//
+NLOG,GELF,ELMAH,JSNLog,Serilog,kissLog.net,Sntry,loggr
+Step 1-Install Nlger form nuget packae ger right click projects-
+Nlog.Web.AspNetCore install-latest rsion 4.8.2
+
+after installetion
+
+Step2-Right click projects Add new itrnm Text File
+nlog.config
+
+<?xml version="1.0" encoding="utf-8"?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <!-- the target to write to -->
+
+    <targets>
+        <!-- write log to file -->
+        <target name="allfile" xsi:type="File"
+                fileName="C:\DemoLogs\nlog-all-${shortdate}.log"/>
+    </targets>
+    
+    <!-- rules to map from logger name to target -->
+    <rules>
+        <logger name="*" minlevel="Trace" writeTo="allfile"/>
+    </rules>
+</nlog>
+
+
+Step 3- nlog.config-right click properties
+
+set Copy-copy if newer set
+
+Step 4- add code program.cs
+
+   public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        WebHost.CreateDefaultBuilder(args)
+        //nlog 63
+            .ConfigureLogging((hostingContext, logging) =>
+            {
+
+
+
+                logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+
+                logging.AddConsole();
+                logging.AddDebug();
+                logging.AddEventSourceLogger();
+                logging.AddNLog();
+                // colose 63
+            })
+            .UseStartup<Startup>();  // Use the Startup class for configuration
+}
+// AFTER TRUN  A CLCK VIWW BUTTON SHOW LOG FOLDER EXCEPTONDETALS
+
+// pART 64 Asp.net core LogLevel Configuration//
+
+Step 1--LogLevel Indicates the severity of the logged mssage
+Trace=0,debuf=1,information=2,Warnibg=3,Error=4,Critical=5,None=6
+
+Step 1 Go to Home controller(INJECT iLOOGER)
+
+ private ILogger _logger;
+ public HomeController(IEmployeeRepository employeeRepository,IHostingEnvironment hostingEnvironment, ILogger<HomeController> logger)
+        {
+            //part64 ASP.NET CORE LOGLEVEL
+            //LogLevel(inject constructor Ilooger looger//
+
+            //CLOSE 64//
+            _employeeRepository = employeeRepository;
+            _webHostEnvironment = hostingEnvironment;
+
+            this.logger = logger;
+after that go to appsetting.json
+"Default": "Trace",// part 62 Logleve//
+
+
+{
+  "Logging": {
+    "LogLevel": {
+      //"Default": "Warning", // Set to Debug for more detailed logs
+      //"Default": "Debug",
+      "Default": "Trace",// part 62 Logleve//
+
+      "Microsoft": "Warning"
+      //"Microsoft.Hosting.Lifetime": "Warning"
+    }
+
+After that Details 
+
+  public ViewResult Details(int? id)
+        {
+            //vedieo 60
+         comment line  //throw new Exception("Error in details view");
+logger.LogTrace("Trace  Log");
+            logger.LogDebug("Debug Log");
+            logger.LogInformation("Information Log");
+            logger.LogWarning("Warning Log");
+            logger.LogError("Error Log");
+            logger.LogCritical("Critical Log");
+
+After tha run Projcs
+
+then it will work corctly
+
+Step3 Go Model Folder
+
+SQLEmployeeRepository
+
+    private readonly ILogger logger;
+
+        public SQLEmployeeRepository(AppDbContext dbcontext,ILogger looger)
+        {
+            this.dbcontext = dbcontext;
+            Looger = looger;
+        }
+   
+
+ 
+               public Employee GetEmployee(int Id)
+        {
+
+            //part 64 looger//
+            logger.LogTrace("Trace  Log");
+            logger.LogDebug("Debug Log");
+            logger.LogInformation("Information Log");
+            logger.LogWarning("Warning Log");
+            logger.LogError("Error Log");
+            logger.LogCritical("Critical Log");
+            //close 64 looger//
+}
+After taht run program
+and appsetting 
+"EmployeeMangement.Controllers.HomeController": "Debug", // Specify custom log level
+      "EmployeeMangement.Models.SQLEmployeeRepository": "Trace", // Specify custom log level
+
+then run and click view button ouput window show all log
+
+appsetting.devlopmnt.son
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Warning"
+
+    }
+  }
+  //"MyKey": "Value of mykey from appsetting.development.json"
+}
+---------------------------------------------------------
+
+// par65 Asp.net Co Identty l From Scrath//
+ASP.net Core Identity Tutorial
+Asp.net core identity is membership system
+1-Create ,Read,Update, and Delete, user account
+2-Account confirmation
+3-Auhentication & Authorization
+4-Password Recovery
+5-Two-factor authentication with SMS
+6-sUPPORT external login providers like Microsoft, Facebook,Google etc
+
+Step 1- Go to Appdbcoxt class inherit from IdentityDbContext
+
+
+public class AppDbContext : IdentityDbContext(right click go to difintion see there is two (1identityuser,identityrole)
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
+Step 2-Now Identity service of in Startup.cs Class
+
+ public void ConfigureServices(IServiceCollection services)
+        {
+               services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
+
+            //part 65 close //
+}
+
+
+
+Step 4-ADD Authentication method//
+
+public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        {
+          app.UseAuthentication();
+
+  bebore pp.mvc (route)add
+}
+Build solution
+Step 5 -add migration//
+Go to Package console
+
+Add-Migration AddingIdintity
+after enter
+error is coming
+The entity type 'IdentityUserLogin<string>' requires a primary key to be defined.
+then solve it
+Go to Appdbcontext class
+
+ protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        //part 64 idintity//
+        base.OnModelCreating(modelBuilder);
+        //part 64 idinty error migration
+}
+after add migration again
+pm>Add-Migration AddingIdintity
+
+PM> Add-Migration AddingIdintity
+To undo this action, use Remove-Migration
+is success migration
+now check database EmployeeDB
+
+ther only two table
+PM> Update-Database
+Done.
+then check table refresh
+see many table 
+AspnetRoleClaim
+AspnetRole
+AspnetUserClaim
+AspnetUseLogin
+AspnetUserRole
+Aspnetuswers
+Aspnetusertoken
+Employees
+
+after see open right click Aspnetuswers see all column
+
+---------------------------------------------------------------------
+
+//Part 65 Register new user using asp.net core identity//
+
+Step 1-Add new class for register user right viewModel folder add new class
+RegisterViewModel(part26 viewmodelclass see vedio)
+
+public class RegistrationViewModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name= "Confirm Password")]
+        [Compare("Password", ErrorMessage ="Password and confirm Password do not match..")]
+        public string ConfirmPassword { get; set; }
+    } nd also validation
+Step 2 -Add new Controller Account Controller in Controller folder
+
+ public class AccountController : Controller
+    {
+        public IActionResult Register()// change index Register
+        {
+            return View();
+        }
+After that View folde folder Account-Right click -add razor view empty
+Register.cshtml
+
+@model RegistrationViewModel
+
+@{
+    @ViewBag.Message= "User Registration";
+}
+
+<h1>User Registration</h1>
+<div class="row">
+    <div class="md-col-12">
+        <form method="post">
+            <!-- Name input -->
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+
+            </div>
+
+            <!-- Email input -->
+            <div class="form-group">
+                <label asp-for="Password"></label>
+
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Confirm Password"></label>
+
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+
+        </form>
+    </div>
+</div>
+
+
+Step 4 Add Menu Item in menu bar go _layout.cshtml 
+<!-- Bootstrap JS and dependencies -- right side menu code >
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    @*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>*@
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+ <li class="nav-item">
+                        <a asp-action="Create" asp-controller="Home" class="nav-link">Create</a>
+                    </li>
+                </ul>
+add registration m enu
+   <!-- Right-aligned "Registration" link -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="/Account/Register" class="nav-link">Registration</a>
+                    </li>
+                </ul>
+            </div>
+after run program click tration 
+
+-------------------------------------------------------------------
+///part 67 vedieo Asp.net core Identity userMnager And signedmanager//
+Step 1 Go to Account controller CREATE HTTPPOST RESGISTRATION ACTION COPY AND PASTE
+
+ //vedioe 67 ASP.NET CORE USERMANAGER AND SIGNED MANAGER
+        [HttpPost]
+        public IActionResult Register(RegistrationViewModel registrationViewModel)// change index Register
+        {
+            return View();
+        }
+after That becos Usermanager<identityUser> is bulten Class consist
+operation 
+
+1-CreateAsync                      SignedManager<identityUser>          
+2-DeleteAsync                       1-SignedInASYNC
+3-UpdateAsync                        2-sIGNEDoUTaSYNC
+4-ETC..                              3-iSsIGNEDiN
+gO TO aCOOUNT CONTROLLER CREATE CONSTRUCTOR
+
+
+ public class AccountController : Controller
+    {
+        //VEDIEO 67 STEP2 cretae constructo//
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.userManager = userManager;  // Use 'this' to distinguish between the field and parameter
+            this.signInManager = signInManager;
+        }
+
+Step3-     [HttpPost]
+        public async Task<IActionResult> Register(RegistrationViewModel model)// change index Register
+        {
+            if(ModelState.IsValid)
+            {
+                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var result = await userManager.CreateAsync(user, model.Password);
+                if(result.Succeeded)
+                {
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+            }
+            return View(model);
+        }
+    }
+ After that run program chek 
+
+// part 68 Asp.net core identity Password complexity//
+https://github.com/dotnet/aspnetcore and PasswordOption  Asp.net core
+
+Step 1-Startup.cs file in Configureservices method add IdentityOption 
+
+    
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequiredUniqueChars = 3;
+
+            }).AddEntityFrameworkStores<AppDbContext>();
+
+          
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequiredUniqueChars = 3;
+
+            });
+            //Parte 68 close identity password complextity//
+After that run program see behavior
+------------------------------------------------------------------------------
+
+//Part 69 Show or Hide Login and Logout Link Asp.net core//
+Step 1-_Layout.csntml
+
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
+@*//Part 69 close Show or Hide Login and Logout Link Asp.net core//*@
+Step 2
+
+ <ul class="navbar-nav ml-auto">
+                    @*//add code part 69//*@
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <form method="post">
+                                <a href="/Account/LogOut" class="nav-link"></a>
+                                <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">
+                                    Logout:@User.Identity.Name
+                                </button>
+                            </form>
+
+                        </li>
+                    }
+                    else
+                    {
+                        @*//close 69//*@
+                        <li class="nav-item">
+                            <a href="/Account/Register" class="nav-link">Registration</a>
+                            @*<a asp-action="Register" asp-controller="Account" class="nav-link">Registration</a>*@
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Account/Login" class="nav-link">Login</a>
+                            @*<a asp-action="Login" asp-controller="Account" class="nav-link">Login</a>*@
+                        </li>
+                    }
+
+                </ul>
+
+Step 3 Add logout Action METHOD
+
+ //vedieo 69 create logout//
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+        //close 69//
+after THAT RUN
+--------------------------------------------------------
+//Part 70 Implementing Login Functionality is Asp.net Core//
+Step 1-LoginViewModel, LoginView, Action-Acount Controller
+1-Create LoginViewModel
+
+public class LoginViewModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Display(Name ="Remeber Me")]
+        public bool RememberMe { get; set; }
+    }
+2-Login.cdhtml inside Account View add view razor view//
+
+@model LoginViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewBag.Title = "User Login";
+}
+<h1>User Login</h1>
+<div class="row">
+    <div class="md-col-12">
+        <form method="post">
+            <!-- Validation summary -->
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <!-- Email input -->
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <!-- Confirm Password input -->
+            <div class="form-group">
+             <div class="checkbox">
+                 <label asp-for="RememberMe">
+                     <input asp-for="RememberMe" />
+                     @Html.DisplayNameFor(m=>m.RememberMe)
+                 </label>
+             </div>
+               
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
+---------------------------------------------------------------------------
+//part 71 Authrization in Asp.net Core//
+Authentication is Identifying who the user is
+Authrization is Identifying what the user can and cannot do
+[Authorize] attribute controls Authorization
+controller after not allowd
+and particular action acces then 
+[Allowannomeous] add  in action laben then acces
+
+After allow all controller label the n go start up page service 
+
+plca code services.AddMvc().AddXmlSerializerFormatters();
+replace 
+
+    services.AddMvc(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }
+                ).AddXmlSerializerFormatters();
+after that run click LOGIN BUTTON IS COMMING ERROR 
+SO RELOVED FIRST [aLLOWaNOMEOU] TRRIBUTE IN LOGIN ACTION
+after taht access reigistration d login both
+
+--------------------------------------------------------------------------------
+
+//Part 72 -Reirect to Original URL after Login in Asp.net Core//
+
+ public async Task<IActionResult> Login(LoginViewModel model, string ReturnUrl)//only add code inside
+{
+
+if (result.Succeeded)
+            {
+                    // 72 return url//
+                    if(!string.IsNullOrEmpty(ReturnUrl))
+                    {
+                        return Redirect(ReturnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+}
+-------------------------------------------------------------------
+//part 73 Open Redirect Vulnerability Example//
+
+use
+ public async Task<IActionResult> Login(LoginViewModel model, string ReturnUrl)
+{
+     if(!string.IsNullOrEmpty(ReturnUrl))
+                    {
+                        return LocalRedirect(ReturnUrl);
+}
+
+or
+ if(!string.IsNullOrEmpty(ReturnUrl))
+                    {
+                        //return LocalRedirect(ReturnUrl);//73 vedieo valunaribily//
+                       
+
+-----------------------------------------------------
+//Part 74 ASP.NET cORE CLINT SIDE VALIDATION//
+Step 1 install three  type 
+1-jquery.js
+2-jquery.validate.js
+3-jquery.validate.unobtrustive.js(reads data dta-val perform clints side validatae without roundtrip quick result)
+right click project add-clint side validation install js and after that add drag and upon _layout.cshtml
