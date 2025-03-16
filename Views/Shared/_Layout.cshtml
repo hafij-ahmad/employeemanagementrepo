@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*//Part 69 Show or Hide Login and Logout Link Asp.net core//*@
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
+@*//Part 69 close Show or Hide Login and Logout Link Asp.net core//*@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+        <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <Environment include="Development">
+        <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    </Environment>
+    <Environment exclude="Development">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"
+              asp-falback-href="~/lib/bootstrap/css/bootstrap.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-value="absolute"
+              asp-suppress-fallback-integrity="true">
+    </Environment>
+    @*<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          integrity="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    @*// part 38 Environment tag helper//*@
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    @*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>*@
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    @*<h1>Master page Content Upcoming Loading wait...</h1>*@
+    @*//ADD MENU BAR VEDIOE 39//*@
+    <div class="container">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <img src="~/Images/employee.png" height="30" width="30" />
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#collapsemenubar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- This is the collapsible part of the navbar -->
+            <div class="collapse navbar-collapse" id="collapsemenubar">
+                <!-- Left-aligned Menu items -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="Index" class="nav-link">List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Create" asp-controller="Home" class="nav-link">Create</a>
+                    </li>
+                </ul>
+
+                <!-- Right-aligned "Registration" link -->
+                <ul class="navbar-nav ml-auto">
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <form method="post">
+
+
+
+                                @Html.AntiForgeryToken()  <!-- Anti-forgery token is important -->
+                                <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">
+                                    Logout @User.Identity.Name
+                                </button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a href="/Account/Register" class="nav-link">Registration</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Account/Login" class="nav-link">Login</a>
+                        </li>
+                        <a href="/Account/Logout" class="nav-link">Logout</a>
+                    }
+                </ul>
+
+</nav>
+
+        <div>
+            <script src="~/JS/Custom.Script.js"></script>
+            @RenderBody()
+        </div>
+    </div>
+
+
+    @*@RenderSection("Script",required:false)*@
+    @if (IsSectionDefined("Script"))
+    {
+        @RenderSection("Script", required: true)
+    }
+</body>
+</html>

@@ -1,0 +1,96 @@
+﻿@*@model EmployeeMangement.Models.Employee*@
+@model HomeDetailsViewModel
+
+@{
+    // Set the layout file (this is commented out in your code, but if you want to use it, you can uncomment it)
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Set page title
+    ViewBag.Title = "Employee Details";
+
+    // Set HTML title tag
+    <title>Employee Details</title>
+
+    // Photo upload code//
+    var photoPath = "~/Images/" + (Model.Employee.PhotoPath ?? "human.jpg");
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Employee Details</title>
+</head>
+
+<body>
+
+    <h1>Details.cshtml from View/Home Folder</h1>
+    <div class="row justify-content-center m-3 text-xl-center">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h1>@Model.Employee.Name</h1>
+                </div>
+                <div class="card-body d-flex align-items-center">
+                    <div class="col-md-4 text-center">
+                        @*<img src="~/Images/human.jpg" class="img-fluid rounded" alt="Employee Image" asp-append-version="true" />*@
+                        <img src="@photoPath" class="img-fluid rounded ImageTumbnail" alt="Employee Image" asp-append-version="true" />
+                    </div>
+                    <div class="col-md-8">
+                        <h4>Employee ID: @Model.Employee.id</h4>
+                        <h4>Email: @Model.Employee.Email</h4>
+                        <h4>Department: @Model.Employee.Department</h4>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back</a>
+                    @*<a href="#" class="btn btn-primary">Edit</a>*@
+                    @*//part 55 edit data show //*@
+                    <a asp-action="Edit" asp-controller="Home" asp-route-id="@Model.Employee.id" class="btn btn-primary">Edit</a>
+                    @*//part 55 edit data show //*@
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @* Retrieve Data From ViewData *@
+    @*<h2>@ViewData["pagetitle"]</h2>*@
+    @{
+        //var employee = ViewData["Employee"] as EmployeeMangement.Models.Employee;
+    }
+    @*@if (employee != null)
+        {
+            <div>Id: @employee.id</div>
+            <div>Name: @employee.Name</div>
+            <div>Email: @employee.Email</div>
+            <div>Department: @employee.Department</div>
+        }*@
+    @* Retrieve Data From ViewBag *@
+    @*<h3>@ViewBag.pagetitle</h3>*@
+    @*@if (ViewBag.Employee != null)
+        {
+            <div>Id: @ViewBag.Employee.Id</div>
+            <div>Name: @ViewBag.Employee.Name</div>
+            <div>Email: @ViewBag.Employee.Email</div>
+            <div>Department: @ViewBag.Employee.Department</div>
+        }*@
+    @*Retrieve Data From Strongly Typed Model strongly
+            typed view provides compile -time checking and intelegence
+        <h4>@ViewBag.pagetitle</h4>
+        <div>Id: @Model.id</div>
+        <div>Name: @Model.Name</div>
+        <div>Email: @Model.Email</div>
+        <div>Department: @Model.Department</div>*@
+    @* Retrieve Data From ViewModel first add namespaces of class ViewModel*@
+    <h3>@ViewBag.PageTitle</h3>
+    <div> Name:@Model.Employee.Name</div>
+    <div>Email:@Model.Employee.Email</div>
+    <div>Department:@Model.Employee.Department</div>
+    @*//Part 29 vedieo Tutorial rendor section page only detail.cshtml//*@
+
+</body>
+
+</html>
+@section Script{
+    <script src="~/JS/Custom.Script.js"></script>
+}
